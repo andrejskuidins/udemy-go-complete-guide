@@ -1,43 +1,45 @@
 package main
 
 import (
-	"fmt"
-	"time"
 	"encoding/json"
+	"fmt"
 	"os"
+	"time"
 )
 
+const PATH = "notes.json"
+
 type note struct {
-	title: string
-	content: string
-	created: time.Now()
+	Title   string
+	Content string
+	Created string // Changed to string
 }
 
 func (n note) outputNoteJson() {
-	// ...
-
-	err := os.WriteFile("note.json", []byte("Hello, Gophers!"), 0666)
+	b, err := json.MarshalIndent(n, "", "    ")
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("error:", err)
 	}
+
+	os.WriteFile(PATH, b, 0755)
 }
 
-func main()  {
+func main() {
 	title := getUserData("Please input title: ")
 	content := getUserData("Please input content: ")
 
 	var appNote note
 	appNote = note{
-		title: title
-		content: content
-		created: created
+		Title:   title,
+		Content: content,
+		Created: time.Now().Format(time.DateTime),
 	}
 
 	appNote.outputNoteJson()
 }
 
 func getUserData(promptText string) string {
-	fmt.Println(promptText)
+	fmt.Print(promptText)
 	var value string
 	fmt.Scanln(&value)
 	return value
