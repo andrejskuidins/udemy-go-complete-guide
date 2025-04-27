@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -41,6 +42,8 @@ func main() {
 func getUserData(promptText string) string {
 	fmt.Print(promptText)
 	var value string
-	fmt.Scanln(&value)
+	scanner := bufio.NewScanner(os.Stdin)
+	scanner.Scan()
+	value = scanner.Text()
 	return value
 }
